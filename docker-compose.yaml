@@ -20,9 +20,10 @@ services:
 
   # jaeger
   front-envoy:
-    build:
-      context: .
-      dockerfile: Dockerfile-frontenvoy
+    image: envoyproxy/envoy-alpine:v1.21.6
+    volumes:
+      - ./front-envoy-jaeger.yaml:/etc/front-envoy.yaml
+    command: "/usr/local/bin/envoy -c /etc/front-envoy.yaml --service-cluster front-proxy"
     ports:
       - "8000:8000"
 
@@ -43,9 +44,7 @@ services:
       - SERVICE_NAME=2
 
   jaeger:
-    build:
-      context: .
-      dockerfile: Dockerfile-jaeger
+    image: jaegertracing/all-in-one@sha256:af062c6d0632f5bcf82a8a5572442fec2c79af7a780d689e9f1dbe17f4544fe2
     environment:
       - COLLECTOR_ZIPKIN_HOST_PORT=9411
     ports:
