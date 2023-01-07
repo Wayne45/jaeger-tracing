@@ -1,0 +1,6 @@
+### Send request
+GET http://localhost:8000/trace/1
+
+### Send request with x-client-trace-id
+GET http://localhost:8000/trace/1
+x-client-trace-id: 5123ec31-90eb-4f80-b8a5-684856e445e4
